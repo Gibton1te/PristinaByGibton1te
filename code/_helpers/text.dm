@@ -14,9 +14,9 @@
  */
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
-/proc/sanitizeSQL(var/t as text)
+/proc/sanitizeSQL(t as text)
 	var/sqltext = dbcon.Quote(t);
-	return copytext(sqltext, 2, length(sqltext));//Quote() adds quotes around input, we already do that
+	return copytext_char(sqltext, 2, length_char(sqltext));//Quote() adds quotes around input, we already do that
 
 /*
  * Text sanitization
@@ -31,20 +31,20 @@
 	if(max_length)
 		//testing shows that just looking for > max_length alone will actually cut off the final character if message is precisely max_length, so >= instead
 		if(length(input) >= max_length)
-			var/overflow = ((length(input)+1) - max_length)
+			var/overflow = ((length_char(input)+1) - max_length)
 			to_chat(usr, "<span class='warning'>Your message is too long by [overflow] character\s.</span>")
 			return
-		input = copytext(input,1,max_length)
+		input = copytext_char(input,1,max_length)
 
 	if(extra)
 		input = replace_characters(input, list("\n"=" ","\t"=" "))
 
 	if(encode)
 		// The below \ escapes have a space inserted to attempt to enable Travis auto-checking of span class usage. Please do not remove the space.
-		//In addition to processing html, rhtml_encode removes byond formatting codes like "\ red", "\ i" and other.
+		//In addition to processing html, html_encode removes byond formatting codes like "\ red", "\ i" and other.
 		//It is important to avoid double-encode text, it can "break" quotes and some other characters.
 		//Also, keep in mind that escaped characters don't work in the interface (window titles, lower left corner of the main window, etc.)
-		input = rhtml_encode(input)
+		input = html_encode(input)
 	else
 		//If not need encode text, simply remove < and >
 		//note: we can also remove here byond formatting codes: 0xFF + next byte
@@ -62,7 +62,7 @@
 		input = copytext(input, 2)
 	return input
 
-//Run sanitize(), but remove <, >, " first to prevent displaying them as &gt; &lt; &34; in some places, after rhtml_encode().
+//Run sanitize(), but remove <, >, " first to prevent displaying them as &gt; &lt; &34; in some places, after html_encode().
 //Best used for sanitize object names, window titles.
 //If you have a problem with sanitize() in chat, when quotes and >, < are displayed as html entites -
 //this is a problem of double-encode(when & becomes &amp;), use sanitize() with encode=0, but not the sanitizeSafe()!
@@ -70,7 +70,7 @@
 	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra)
 
 /proc/punctuate(var/t as text)
-	var/last = copytext(t,-1)
+	var/last = copytext_char(t,-1)
 	if(last in list("!","?","."))
 		return t
 	else
@@ -85,7 +85,7 @@
 	var/last_char_group			= 0
 	var/output = ""
 
-	for(var/i=1, i<=length(input), i++)
+	for(var/i=1, i<=length_char(input), i++)
 		var/ascii_char = text2ascii(input,i)
 		switch(ascii_char)
 			// A  .. Z
@@ -133,7 +133,7 @@
 	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 
 	if(last_char_group == 1)
-		output = copytext(output,1,length(output))	//removes the last character (in this case a space)
+		output = copytext_char(output,1,length(output))	//removes the last character (in this case a space)
 
 	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai","plating"))	//prevents these common metagamey names
 		if(cmptext(output,bad_name))	return	//(not case sensitive)
@@ -156,7 +156,7 @@
 
 //Old variant. Haven't dared to replace in some places.
 /proc/sanitize_old(var/t,var/list/repl_chars = list("\n"="#","\t"="#"))
-	return rhtml_encode(replace_characters(t,repl_chars))
+	return html_encode(replace_characters(t,repl_chars))
 
 /*
  * Text searches
@@ -166,30 +166,30 @@
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hasprefix(text, prefix)
 	var/start = 1
-	var/end = length(prefix) + 1
-	return findtext(text, prefix, start, end)
+	var/end = length_char(prefix) + 1
+	return findtext_char(text, prefix, start, end)
 
 //Checks the beginning of a string for a specified sub-string. This proc is case sensitive
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hasprefix_case(text, prefix)
 	var/start = 1
-	var/end = length(prefix) + 1
-	return findtextEx(text, prefix, start, end)
+	var/end = length_char(prefix) + 1
+	return findtextEx_char(text, prefix, start, end)
 
 //Checks the end of a string for a specified substring.
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hassuffix(text, suffix)
-	var/start = length(text) - length(suffix)
+	var/start = length_char(text) - length_char(suffix)
 	if(start)
-		return findtext(text, suffix, start, null)
+		return findtext_char(text, suffix, start, null)
 	return
 
 //Checks the end of a string for a specified substring. This proc is case sensitive
 //Returns the position of the substring or 0 if it was not found
 /proc/dd_hassuffix_case(text, suffix)
-	var/start = length(text) - length(suffix)
+	var/start = length_char(text) - length_char(suffix)
 	if(start)
-		return findtextEx(text, suffix, start, null)
+		return findtextEx_char(text, suffix, start, null)
 
 /*
  * Text modification
@@ -202,34 +202,34 @@
 
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
-	while (length(t) < u)
+	while (length_char(t) < u)
 		t = "0[t]"
 	return t
 
 //Adds 'u' number of spaces ahead of the text 't'
 /proc/add_lspace(t, u)
-	while(length(t) < u)
+	while(length_char(t) < u)
 		t = " [t]"
 	return t
 
 //Adds 'u' number of spaces behind the text 't'
 /proc/add_tspace(t, u)
-	while(length(t) < u)
+	while(length_char(t) < u)
 		t = "[t] "
 	return t
 
 //Returns a string with reserved characters and spaces before the first letter removed
 /proc/trim_left(text)
-	for (var/i = 1 to length(text))
+	for (var/i = 1 to length_char(text))
 		if (text2ascii(text, i) > 32)
-			return copytext(text, i)
+			return copytext_char(text, i)
 	return ""
 
 //Returns a string with reserved characters and spaces after the last letter removed
 /proc/trim_right(text)
-	for (var/i = length(text), i > 0, i--)
+	for (var/i = length_char(text), i > 0, i--)
 		if (text2ascii(text, i) > 32)
-			return copytext(text, 1, i + 1)
+			return copytext_char(text, 1, i + 1)
 	return ""
 
 //Returns a string with reserved characters and spaces before the first word and after the last word removed.
@@ -238,11 +238,11 @@
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(var/t as text)
-	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
+	return uppertext(copytext_char(t, 1, 2)) + copytext_char(t, 2)
 
 //Bolds "shouted" messages.
 /proc/add_shout_append(text)
-	if (copytext(text,-1) == "!")
+	if (copytext_char(text,-1) == "!")
 		text = "<b>[text]</b>"
 	return text
 
@@ -313,8 +313,8 @@
 //Used in preferences' SetFlavorText and human's set_flavor verb
 //Previews a string of len or less length
 proc/TextPreview(var/string,var/len=40)
-	if(length(string) <= len)
-		if(!length(string))
+	if(length_char(string) <= len)
+		if(!length_char(string))
 			return "\[...\]"
 		else
 			return string
@@ -323,7 +323,7 @@ proc/TextPreview(var/string,var/len=40)
 
 //alternative copytext() for encoded text, doesn't break html entities (&#34; and other)
 /proc/copytext_preserve_html(var/text, var/first, var/last)
-	return rhtml_encode(copytext(html_decode(text), first, last))
+	return html_encode(copytext(html_decode(text), first, last))
 
 //For generating neat chat tag-images
 //The icon var could be local in the proc, but it's a waste of resources

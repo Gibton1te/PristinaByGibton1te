@@ -1,7 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 proc/Intoxicated(phrase)
-	phrase = rhtml_decode(phrase)
+	phrase = html_decode(phrase)
 	var/leng=length(phrase)
 	var/counter=length(phrase)
 	var/newphrase=""
@@ -15,7 +15,7 @@ proc/Intoxicated(phrase)
 			if(lowertext(newletter)=="c")	newletter="k"
 		switch(rand(1,7))
 			if(1,3,5,8)	newletter="[lowertext(newletter)]"
-			if(2,4,6,15)	newletter="[ruppertext(newletter)]"
+			if(2,4,6,15)	newletter="[uppertext(newletter)]"
 			if(7)	newletter+="'"
 			//if(9,10)	newletter="<b>[newletter]</b>"
 			//if(11,12)	newletter="<big>[newletter]</big>"
@@ -24,7 +24,7 @@ proc/Intoxicated(phrase)
 	return newphrase
 
 proc/NewStutter(phrase,stunned)
-	phrase = rhtml_decode(phrase)
+	phrase = html_decode(phrase)
 
 	var/list/split_phrase = splittext(phrase," ") //Split it up into words.
 
@@ -92,7 +92,7 @@ proc/RadioChat(mob/living/user, message, distortion_chance = 60, distortion_spee
 	var/datum/language/language
 	if(user)
 		language = user.get_default_language()
-	message = rhtml_decode(message)
+	message = html_decode(message)
 	var/new_message = ""
 	var/input_size = length(message)
 	var/lentext = 0
@@ -167,5 +167,5 @@ proc/RadioChat(mob/living/user, message, distortion_chance = 60, distortion_spee
 			capitalize(newletter)
 		new_message += newletter
 		lentext += 1
-	return russian_to_cp1251(sanitize(new_message))
+	return sanitize(new_message)
 

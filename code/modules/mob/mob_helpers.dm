@@ -235,7 +235,7 @@ var/list/global/organ_rel_size = list(
 	return t
 
 proc/slur(phrase)
-	phrase = rhtml_decode(phrase)
+	phrase = html_decode(phrase)
 	var/leng=length(phrase)
 	var/counter=length(phrase)
 	var/newphrase=""
@@ -253,8 +253,8 @@ proc/slur(phrase)
 			if(lowertext(newletter)=="�")	newletter="��"
 			if(lowertext(newletter)=="�")	newletter="��"
 		switch(rand(1,15))
-			if(1,3,5,8)	newletter="[rlowertext(newletter)]"
-			if(2,4,6,15)	newletter="[ruppertext(newletter)]"
+			if(1,3,5,8)	newletter="[lowertext(newletter)]"
+			if(2,4,6,15)	newletter="[uppertext(newletter)]"
 			if(7)	newletter+="'"
 			//if(9,10)	newletter="<b>[newletter]</b>"
 			//if(11,12)	newletter="<big>[newletter]</big>"
@@ -263,7 +263,7 @@ proc/slur(phrase)
 	return newphrase
 
 /proc/stutter(n)
-	var/te = rhtml_decode(n)
+	var/te = html_decode(n)
 	var/t = ""//placed before the message. Not really sure what it's for.
 	n = length(n)//length of the entire word
 	var/p = null
@@ -302,7 +302,7 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 
 		returntext += letter
 
-	return rhtml_decode(sanitize(returntext))
+	return html_decode(sanitize(returntext))
 
 /proc/ninjaspeak(n)
 /*
@@ -310,7 +310,7 @@ The difference with stutter is that this proc can stutter more than 1 letter
 The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
 It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
 */
-	var/te = rhtml_decode(n)
+	var/te = html_decode(n)
 	var/t = ""
 	n = length(n)
 	var/p = 1
