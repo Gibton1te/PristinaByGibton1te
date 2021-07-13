@@ -2595,6 +2595,7 @@
 #include "interface\skin.dmf"
 #include "maps\_map_include.dm"
 #include "maps\embassy_1983\escnew.dm"
+#include "maps\embassy_1983\escnew_areas.dm"
 #include "maps\embassy_1983\escnew_define.dm"
 #include "maps\embassy_1983\escnew_outfits.dm"
 #include "maps\embassy_1983\tisanovo_areas.dm"
