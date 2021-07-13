@@ -1,4 +1,4 @@
-
+/*
 var/list/interior_areas = list(/area/coldwar/sewer,
 							/area/coldwar/underground,
 							/area/coldwar/underground/bunker,
@@ -12,7 +12,7 @@ var/list/interior_areas = list(/area/coldwar/sewer,
 							/area/coldwar/usmcfob,
 							/area/coldwar/warpactfob
 							)
-
+*/
 //////////////OUTSIDE AREAS
 
 /area/coldwar

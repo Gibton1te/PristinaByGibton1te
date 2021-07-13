@@ -17,12 +17,20 @@ var/list/interior_areas = list(/area/coldwar/house1,
 							/area/coldwar/house16,
 							/area/coldwar/house17,
 							/area/coldwar/house18,
-							/area/coldwar/usmc_safe
+							/area/coldwar/usmc_safe,
+							/area/coldwar/sewer,
+							/area/coldwar/underground,
+							/area/coldwar/underground/bunker,
+							/area/coldwar/verylargeenclosed,
+							/area/coldwar/largeenclosed,
+							/area/coldwar/mediumenclosed,
+							/area/coldwar/smallenclosed,
+							/area/coldwar/largesoftfloor,
+							/area/coldwar/mediumsoftfloor,
+							/area/coldwar/smallsoftfloor,
+							/area/coldwar/usmcfob,
+							/area/coldwar/warpactfob
 							)
-
-/area
-	var/safezone = 0
-	var/radiated = 0
 
 /area/coldwar
 	name = "area"
@@ -516,7 +524,6 @@ var/list/interior_areas = list(/area/coldwar/house1,
 	sound_env = LARGE_ENCLOSED
 	requires_power = 0
 	dynamic_lighting = 1
-	safezone = 1
 	ambience = list (
 	'sound/ambience/coldwar/dayz/bunker1.ogg',
 	'sound/ambience/coldwar/dayz/bunker2.ogg',
