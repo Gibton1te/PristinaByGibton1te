@@ -129,10 +129,10 @@
 
 /obj/item/weapon/radioset/dropped(mob/user)
 	..()
-	reattach_radio(user) 
+	reattach_radio(user)
 
 /obj/item/weapon/radioset/nato/headset/dropped(mob/user)
-	..() 
+	..()
 	reattach_headset(user)
 
 /obj/item/weapon/radioset/warpact/headset/dropped(mob/user)
@@ -150,7 +150,7 @@
 		radio.forceMove(src)
 
 	update_icon()
-	
+
 /obj/item/weapon/radioset/proc/reattach_headset(mob/user)
 	if(!headset) return
 
@@ -214,10 +214,23 @@ var/global/list/army_channels_ph = list(
 	throw_speed = 2
 	throw_range = 6
 	w_class = ITEM_SIZE_HUGE
+	action_button_name = "Call supply"
+	var/supply_nato = FALSE
+	var/supply_wp = TRUE
+	var/air_cooldown = 0
 
 /obj/item/device/radio/escalation/New()
 	..()
 	internal_channels = army_channels_ph.Copy()
+
+/obj/item/device/radio/escalation/linked/ui_action_click()
+	call_supply()
+
+/obj/item/device/radio/escalation/linked/verb/call_supply_act()
+	set name = "Call supply"
+	set category = "Radio"
+
+	call_supply()
 
 /obj/item/device/radio/escalation/linked/warpact
 	name = "R-105D receiver"
@@ -227,6 +240,8 @@ var/global/list/army_channels_ph = list(
 	slot_flags = null
 	w_class = ITEM_SIZE_HUGE
 	badquality = 1
+	supply_wp = TRUE
+	supply_nato = FALSE
 
 /obj/item/device/radio/escalation/linked/nato
 	name = "AN/PRC-77 receiver"
@@ -236,6 +251,50 @@ var/global/list/army_channels_ph = list(
 	slot_flags = null
 	w_class = ITEM_SIZE_HUGE
 	badquality = 1
+	supply_nato = TRUE
+	supply_wp = FALSE
+
+#define AIR_MED_CD 5000
+#define AIR_AMMO_CD 8000
+
+/obj/item/device/radio/escalation/linked/proc/call_supply()
+	var/mob/M = src.loc
+
+	if(air_cooldown)
+		to_chat(M, "Supply Operator says, \"Sorry, we can't send any supplies right now!\"")
+	else
+		var/choice = alert(M, "Which supplies do you needed?","Air supplies", "Medical","Ammo" , "Cancel")
+
+		if(choice == "Cancel")
+			return
+
+		if (choice == "Medical")
+			if(!air_cooldown)
+				to_chat(M, "Supply Operator says, \"Supplies on the way!\"")
+				if(supply_wp)
+					new /obj/structure/closet/crate/airsupply/medical_wp(M.loc)
+					air_cooldown = TRUE
+					spawn(AIR_MED_CD)
+						air_cooldown = FALSE
+				else
+					new /obj/structure/closet/crate/airsupply/medical_nato(M.loc)
+					air_cooldown = TRUE
+					spawn(AIR_MED_CD)
+						air_cooldown = FALSE
+
+		if (choice == "Ammo")
+			if(!air_cooldown)
+				to_chat(M, "Supply Operator says, \"Supplies on the way!\"")
+				if(supply_wp)
+					new /obj/structure/closet/crate/airsupply/ammo_wp(M.loc)
+					air_cooldown = TRUE
+					spawn(AIR_AMMO_CD)
+						air_cooldown = FALSE
+				else
+					new /obj/structure/closet/crate/airsupply/ammo_nato(M.loc)
+					air_cooldown = TRUE
+					spawn(AIR_AMMO_CD)
+						air_cooldown = FALSE
 
 /obj/item/device/radio/escalation/linked/warpact/headset
 	name = "R-105D headset"
