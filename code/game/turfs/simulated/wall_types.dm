@@ -82,6 +82,7 @@
 
 /turf/simulated/wall/concrete/New(var/newloc)
 	icon_state = null
+	hitsound = 'sound/weapons/Genhit.ogg'
 	color = null
 	..(newloc, "concrete")
 

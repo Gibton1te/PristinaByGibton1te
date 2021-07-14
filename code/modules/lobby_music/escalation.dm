@@ -5,5 +5,5 @@
 
 /lobby_music/escalation
 	artist = null
-	title = "Escalation Theme"
-	song = 'sound/music/atriumcarcerifacesofwar.ogg'
+	title = "Tisanovo Theme"
+	song = 'sound/music/youvegotanotherthingcoming.ogg'

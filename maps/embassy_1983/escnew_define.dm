@@ -1,11 +1,11 @@
 
 /datum/map/escnew
-	name = "embassy_1983"
-	full_name = "Escalation: 1983 - Embassy"
-	path = "embassy_1983"
+	name = "tisanovo"
+	full_name = "Tisanovo: 1984"
+	path = "tisanovo"
 
-	lobby_icon = 'maps/embassy_1983/escnew_lobby.dmi'
-	lobby_screens = list("1983")
+	lobby_icon = 'maps/embassy_1983/tisanovo1984_480_2.gif'
+	lobby_screens = list("1984")
 
 	station_levels = list(1, 2, 3)
 	contact_levels = list(1, 2, 3)

@@ -1,11 +1,5 @@
 #if !defined(using_map_DATUM)
 
-/*
-	#include "escnew_areas.dm"
-
-	#include "embassy_1983-1.dmm"
-	#include "embassy_1983-2.dmm"
-*/
 	#include "tisanovo.dmm"
 	#include "tisanovo_areas.dm"
 

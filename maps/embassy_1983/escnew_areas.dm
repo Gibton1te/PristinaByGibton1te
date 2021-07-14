@@ -23,11 +23,30 @@ var/list/interior_areas = list(/area/coldwar/sewer,
 	dynamic_lighting = 1
 	base_turf = /turf/unsimulated/ground/
 	ambience = list (
-	'sound/ambience/coldwar/0Background0.ogg',
-	'sound/ambience/coldwar/0Background1.ogg',
-	'sound/ambience/coldwar/0Background2.ogg',
-	'sound/ambience/coldwar/0Background3.ogg',
-	'sound/ambience/coldwar/0Background4.ogg',
+	'sound/ambience/coldwar/dayz/ForestDay.ogg',
+	'sound/ambience/coldwar/dayz/ForestDayBirds.ogg',
+	'sound/ambience/coldwar/dayz/WindForestLight.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_1.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_2.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_3.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_4.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_5.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_6.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_7.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_8.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_9.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_10.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_11.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_12.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_13.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_14.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_15.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_shooting_1.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_shooting_2.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_shooting_3.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_wind_1.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_wind_2.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_wind_3.ogg',
 	)
 
 /area/coldwar/foboutside
@@ -39,6 +58,32 @@ var/list/interior_areas = list(/area/coldwar/sewer,
 	name = "forest"
 	icon_state = "forest"
 	sound_env = FOREST
+	ambience = list (
+	'sound/ambience/coldwar/dayz/ForestDay.ogg',
+	'sound/ambience/coldwar/dayz/ForestDayBirds.ogg',
+	'sound/ambience/coldwar/dayz/WindForestLight.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_1.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_2.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_3.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_4.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_5.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_6.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_7.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_8.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_9.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_10.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_11.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_12.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_13.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_14.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_crow_15.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_shooting_1.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_shooting_2.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_shooting_3.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_wind_1.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_wind_2.ogg',
+	'sound/ambience/coldwar/dayz/rand/rnd_wind_3.ogg',
+	)
 
 /area/coldwar/road
 	name = "road"
